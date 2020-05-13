@@ -7,22 +7,22 @@ namespace HELI
     public class KeyboardInput : BaseInput
     {
         [Header("Keyboard Input Variables")]
-        [SerializeField] float throttleInput = 0;
+        protected float throttleInput = 0;
         public float ThrottleInput
         {
             get { return throttleInput; }
         }
-        [SerializeField] float collectiveInput = 0;
+        protected float collectiveInput = 0;
         public float CollectiveInput
         {
             get { return collectiveInput; }
         }
-        [SerializeField] Vector2 cyclicInput = Vector2.zero;
+        protected Vector2 cyclicInput = Vector2.zero;
         public Vector2 CyclicInput
         {
             get { return cyclicInput; }
         }
-        [SerializeField] float pedalInput = 0;
+        protected float pedalInput = 0;
         public float PedalInput
         {
             get { return pedalInput; }
@@ -33,24 +33,33 @@ namespace HELI
             HandleThrottle();
             HandleCollective();
             HandleCyclic();
-            HandlePeddal();
+            HandlePedal();
+
+            ClampInput();
         }
-        void HandleThrottle()
+        protected virtual void HandleThrottle()
         {
             throttleInput = Input.GetAxis("Throttle");
         }
-        void HandleCollective()
+        protected virtual void HandleCollective()
         {
             collectiveInput = Input.GetAxis("Collective");
         }
-        void HandleCyclic()
+        protected virtual void HandleCyclic()
         {
             cyclicInput.x = horizontal;
             cyclicInput.y = vertical;
         }
-        void HandlePeddal()
+        protected virtual void HandlePedal()
         {
             pedalInput = Input.GetAxis("Pedal");
+        }
+        protected void ClampInput()
+        {
+            throttleInput = Mathf.Clamp(throttleInput, -1, 1);
+            collectiveInput = Mathf.Clamp(collectiveInput, -1, 1);
+            cyclicInput = Vector2.ClampMagnitude(cyclicInput, 1);
+            pedalInput = Mathf.Clamp(pedalInput, -1, 1);
         }
     }
 }

@@ -1,24 +1,16 @@
-﻿using System.Collections;
+﻿using HELI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewTorque : MonoBehaviour
+public class NewTorque : BaseRBController
 {
     [SerializeField] float torqueSpeed = 1;
+    [SerializeField] Vector3 rotationDirection = Vector3.up;
 
-    Rigidbody rb;
-    // Start is called before the first frame update
-    void Start()
+    protected override void HandlePhysics()
     {
-        rb = GetComponent<Rigidbody>();
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if(rb)
-        {
-            rb.AddTorque(Vector3.up * torqueSpeed);
-        }
+        Vector3 wantedTorque = Vector3.up * torqueSpeed;
+        rb.AddTorque(wantedTorque);
     }
 }

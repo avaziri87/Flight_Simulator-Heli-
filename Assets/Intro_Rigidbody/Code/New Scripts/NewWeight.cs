@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class NewWeight : MonoBehaviour
 {
-    [Header("Weight Properties")]
+    [Header("Base Properties")]
     [SerializeField] float weight_lbs = 10;
     [SerializeField] float lbs_kg = 0.454f;
     [SerializeField] float kg_lbs = 2.205f;
-    [SerializeField] float weight;
+    protected float weight;
 
     Rigidbody rb;
     // Start is called before the first frame update

@@ -8,9 +8,14 @@ namespace HELI
     {
         [Header("Keyboard Input Variables")]
         protected float throttleInput = 0;
-        public float ThrottleInput
+        public float RawThrottleInput
         {
             get { return throttleInput; }
+        }
+        protected float stickyThrottle = 0;
+        public float StickyThrottle
+        {
+            get { return stickyThrottle; }
         }
         protected float collectiveInput = 0;
         public float CollectiveInput
@@ -30,12 +35,15 @@ namespace HELI
         protected override void HandleInputs()
         {
             base.HandleInputs();
+            //input methods
             HandleThrottle();
             HandleCollective();
             HandleCyclic();
             HandlePedal();
 
+            //utility methods
             ClampInput();
+            HandleStickyThrottle();
         }
         protected virtual void HandleThrottle()
         {
@@ -60,6 +68,12 @@ namespace HELI
             collectiveInput = Mathf.Clamp(collectiveInput, -1, 1);
             cyclicInput = Vector2.ClampMagnitude(cyclicInput, 1);
             pedalInput = Mathf.Clamp(pedalInput, -1, 1);
+        }
+
+        protected void HandleStickyThrottle()
+        {
+            stickyThrottle += RawThrottleInput*Time.deltaTime;
+            stickyThrottle = Mathf.Clamp01(stickyThrottle);
         }
     }
 }

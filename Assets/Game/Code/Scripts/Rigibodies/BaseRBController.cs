@@ -9,7 +9,7 @@ namespace HELI
     public class BaseRBController : MonoBehaviour
     {
         [Header("Weight Properties")]
-        [SerializeField] Transform centerOfGravity = null;
+        public Transform centerOfGravity = null;
         [SerializeField] float weight_lbs = 10;
         [SerializeField] float lbs_kg = 0.454f;
         [SerializeField] float kg_lbs = 2.205f;

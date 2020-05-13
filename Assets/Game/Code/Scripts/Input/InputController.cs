@@ -10,35 +10,90 @@ namespace HELI
         Xbox,
         Mobile
     }
+    [RequireComponent(typeof(KeyboardInput), typeof(XboxInput))]
     public class InputController: MonoBehaviour
     {
+        [Header("Input Properties")]
         public InputType inputType = InputType.Keyboard;
 
-        [Header("Input Components")]
-        public KeyboardInput keyboardInput;
-        public XboxInput xboxInput;
+        KeyboardInput keyboardInput;
+        XboxInput xboxInput;
 
+        float throttleInput;
+        public float ThrottleInput
+        {
+            get { return throttleInput; }
+        }
+        float stickyThrottle;
+        public float StickyThrottle
+        {
+            get { return stickyThrottle; }
+        }
+        float collectiveInput;
+        public float CollectiveInput
+        {
+            get { return collectiveInput; }
+        }
+        Vector2 cyclicInput =  Vector2.zero;
+        public Vector2 CyclicInput
+        {
+            get { return cyclicInput; }
+        }
+        float pedalInput;
+        public float PedalInput
+        {
+            get { return pedalInput; }
+        }
         private void Start()
         {
-            SetInputType(inputType);
+            keyboardInput = GetComponent<KeyboardInput>();
+            xboxInput = GetComponent<XboxInput>();
+            if (keyboardInput && xboxInput)
+            {
+                SetInputType(inputType);
+            }
         }
-
-        void SetInputType(InputType type)
+        private void Update()
         {
             if(keyboardInput && xboxInput)
             {
-                if (type == InputType.Keyboard)
+                switch (inputType)
                 {
-                    keyboardInput.enabled = true;
-                    xboxInput.enabled = false;
+                    case InputType.Keyboard:
+                        throttleInput = keyboardInput.RawThrottleInput;
+                        collectiveInput = keyboardInput.CollectiveInput;
+                        cyclicInput = keyboardInput.CyclicInput;
+                        pedalInput = keyboardInput.PedalInput;
+                        stickyThrottle = keyboardInput.StickyThrottle;
+                        break;
+                    case InputType.Xbox:
+                        throttleInput = xboxInput.RawThrottleInput;
+                        collectiveInput = xboxInput.CollectiveInput;
+                        cyclicInput = xboxInput.CyclicInput;
+                        pedalInput = xboxInput.PedalInput;
+                        stickyThrottle = xboxInput.StickyThrottle;
+                        break;
+                    case InputType.Mobile:
+                        break;
+                    default:
+                        break;
                 }
+            }
 
-                if (type == InputType.Xbox)
-                {
-                    keyboardInput.enabled = false;
-                    xboxInput.enabled = true;
-                }
+        }
+        void SetInputType(InputType type)
+        {
+            if (type == InputType.Keyboard)
+            {
+                keyboardInput.enabled = true;
+                xboxInput.enabled = false;
+            }
+            if (type == InputType.Xbox)
+            {
+                keyboardInput.enabled = false;
+                xboxInput.enabled = true;
             }
         }
     }
 }
+

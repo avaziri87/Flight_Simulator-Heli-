@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HELI
 {
@@ -106,12 +107,12 @@ namespace HELI
         private void OnGUI()
         {
             GUI.Label(new Rect(25, 25, 200, 30), "Input Values");
-            GUI.Label(new Rect(25, 55, 200, 30), "throttle Input: " + throttleInput);
+            GUI.Label(new Rect(25, 55, 500, 30), "throttle Input: " + throttleInput + " Triggers control Throttle: right increase; left decrease");
             GUI.Label(new Rect(25, 85, 200, 30), "sticky Throttle: " + stickyThrottle);
-            GUI.Label(new Rect(25, 115, 200, 30), "collective Input: " + collectiveInput);
+            GUI.Label(new Rect(25, 115, 500, 30), "collective Input: " + collectiveInput + " Right joystick controls Colective: right increase; left decrease");
             GUI.Label(new Rect(25, 145, 200, 30), "sticky Collective: " + stickyCollectiveInput);
-            GUI.Label(new Rect(25, 175, 200, 30), "cyclic Input: " + cyclicInput);
-            GUI.Label(new Rect(25, 205, 200, 30), "pedal Input: " + pedalInput);
+            GUI.Label(new Rect(25, 175, 500, 30), "cyclic Input: " + cyclicInput + " left joystick controls Cyclic");
+            GUI.Label(new Rect(25, 205, 500, 30), "pedal Input: " + pedalInput + " Right joystick controls Colective: up increase; down decrease");
         }
     }
 

@@ -16,10 +16,12 @@ namespace HELI
 
         InputController inputController;
         HeliCharacteristic characteristic;
+        HelicControlHandleStick controlStick;
         public override void Start()
         {
             base.Start();
             characteristic = GetComponent<HeliCharacteristic>();
+            controlStick = GetComponent<HelicControlHandleStick>();
         }
         protected override void HandlePhysics()
         {
@@ -29,6 +31,7 @@ namespace HELI
                 HandleEngine();
                 HandleRotors();
                 HandleCharacteristics();
+                HandleControlStick();
             }
         }
 
@@ -53,6 +56,13 @@ namespace HELI
             if(characteristic)
             {
                 characteristic.UpdateCharacteristic(rb, inputController);
+            }
+        }
+        protected virtual void HandleControlStick()
+        {
+            if(controlStick)
+            {
+                controlStick.UpdateStick(inputController);
             }
         }
     }

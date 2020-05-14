@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Game/Scenes/Development/HeliPhysics.unity
+    guid: 9173bfb54af221c47800cd0fb6990ed5
   m_configObjects: {}

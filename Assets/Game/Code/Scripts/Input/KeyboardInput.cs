@@ -6,31 +6,48 @@ namespace HELI
 {
     public class KeyboardInput : BaseInput
     {
+        [Header("GUI size")]
+        [SerializeField] float guiWidth = 0;
+        [SerializeField] float guiHeight = 0;
+        [Space]
         [Header("Keyboard Input Variables")]
-        protected float throttleInput = 0;
+        public float throttleInput = 0;
         public float RawThrottleInput
         {
             get { return throttleInput; }
         }
-        protected float stickyThrottle = 0;
+        public float stickyThrottle = 0;
         public float StickyThrottle
         {
             get { return stickyThrottle; }
         }
-        protected float collectiveInput = 0;
-        public float CollectiveInput
+        public float collectiveInput = 0;
+        public float clampCollective = 1;
+        public float RawCollectiveInput
         {
             get { return collectiveInput; }
         }
-        protected Vector2 cyclicInput = Vector2.zero;
+        public float stickyCollectiveInput = 0;
+        public float StickyCollectiveInput
+        {
+            get { return stickyCollectiveInput; }
+        }
+        public Vector2 cyclicInput = Vector2.zero;
+        public float clampCyclic = 1;
         public Vector2 CyclicInput
         {
             get { return cyclicInput; }
         }
-        protected float pedalInput = 0;
+        public float pedalInput = 0;
+        public float clampPedal = 1;
         public float PedalInput
         {
             get { return pedalInput; }
+        }
+        public bool hoverInput;
+        public bool HoverInput
+        {
+            get { return hoverInput; }
         }
         protected override void HandleInputs()
         {
@@ -40,10 +57,12 @@ namespace HELI
             HandleCollective();
             HandleCyclic();
             HandlePedal();
+            HandleHover();
 
             //utility methods
             ClampInput();
             HandleStickyThrottle();
+            HandleStickyCollective();
         }
         protected virtual void HandleThrottle()
         {
@@ -62,12 +81,16 @@ namespace HELI
         {
             pedalInput = Input.GetAxis("Pedal");
         }
+        protected virtual void HandleHover()
+        {
+            hoverInput = Input.GetButtonDown("Hover");
+        }
         protected void ClampInput()
         {
             throttleInput = Mathf.Clamp(throttleInput, -1, 1);
-            collectiveInput = Mathf.Clamp(collectiveInput, -1, 1);
-            cyclicInput = Vector2.ClampMagnitude(cyclicInput, 1);
-            pedalInput = Mathf.Clamp(pedalInput, -1, 1);
+            collectiveInput = Mathf.Clamp(collectiveInput, -clampCollective, clampCollective);
+            cyclicInput = Vector2.ClampMagnitude(cyclicInput, clampCyclic);
+            pedalInput = Mathf.Clamp(pedalInput, -clampPedal, clampPedal);
         }
 
         protected void HandleStickyThrottle()
@@ -75,5 +98,21 @@ namespace HELI
             stickyThrottle += RawThrottleInput*Time.deltaTime;
             stickyThrottle = Mathf.Clamp01(stickyThrottle);
         }
+        protected void HandleStickyCollective()
+        {
+            stickyCollectiveInput += -collectiveInput * Time.deltaTime;
+            stickyCollectiveInput = Mathf.Clamp01(stickyCollectiveInput);
+        }
+        private void OnGUI()
+        {
+            GUI.Label(new Rect(25, 25, 200, 30), "Input Values");
+            GUI.Label(new Rect(25, 55, 200, 30), "throttle Input: " + throttleInput);
+            GUI.Label(new Rect(25, 85, 200, 30), "sticky Throttle: " + stickyThrottle);
+            GUI.Label(new Rect(25, 115, 200, 30), "collective Input: " + collectiveInput);
+            GUI.Label(new Rect(25, 145, 200, 30), "sticky Collective: " + stickyCollectiveInput);
+            GUI.Label(new Rect(25, 175, 200, 30), "cyclic Input: " + cyclicInput);
+            GUI.Label(new Rect(25, 205, 200, 30), "pedal Input: " + pedalInput);
+        }
     }
+
 }

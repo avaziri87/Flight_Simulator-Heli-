@@ -15,7 +15,7 @@ namespace HELI
         [SerializeField] float kg_lbs = 2.205f;
         protected float weight;
         protected Rigidbody rb;
-        void Start()
+        public virtual void Start()
         {
             float final_kg = weight_lbs * lbs_kg;
             weight = final_kg;

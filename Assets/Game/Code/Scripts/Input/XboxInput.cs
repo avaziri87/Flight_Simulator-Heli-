@@ -23,5 +23,9 @@ namespace HELI
         {
             pedalInput = Input.GetAxis("XboxPedal");
         }
+        protected override void HandleHover()
+        {
+            hoverInput = Input.GetButtonDown("XboxHover");
+        }
     }
 }

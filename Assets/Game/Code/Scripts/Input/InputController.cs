@@ -34,6 +34,11 @@ namespace HELI
         {
             get { return collectiveInput; }
         }
+        float stickyCollectiveInput;
+        public float StickyCollectiveInput
+        {
+            get { return stickyCollectiveInput; }
+        }
         Vector2 cyclicInput =  Vector2.zero;
         public Vector2 CyclicInput
         {
@@ -43,6 +48,11 @@ namespace HELI
         public float PedalInput
         {
             get { return pedalInput; }
+        }
+        bool hoverInput;
+        public bool HoverInput
+        {
+            get { return hoverInput; }
         }
         private void Start()
         {
@@ -61,17 +71,21 @@ namespace HELI
                 {
                     case InputType.Keyboard:
                         throttleInput = keyboardInput.RawThrottleInput;
-                        collectiveInput = keyboardInput.CollectiveInput;
+                        collectiveInput = keyboardInput.RawCollectiveInput;
                         cyclicInput = keyboardInput.CyclicInput;
                         pedalInput = keyboardInput.PedalInput;
                         stickyThrottle = keyboardInput.StickyThrottle;
+                        stickyCollectiveInput = keyboardInput.StickyCollectiveInput;
+                        hoverInput = keyboardInput.HoverInput;
                         break;
                     case InputType.Xbox:
                         throttleInput = xboxInput.RawThrottleInput;
-                        collectiveInput = xboxInput.CollectiveInput;
+                        collectiveInput = xboxInput.RawCollectiveInput;
                         cyclicInput = xboxInput.CyclicInput;
                         pedalInput = xboxInput.PedalInput;
                         stickyThrottle = xboxInput.StickyThrottle;
+                        stickyCollectiveInput = xboxInput.StickyCollectiveInput;
+                        hoverInput = xboxInput.HoverInput;
                         break;
                     case InputType.Mobile:
                         break;

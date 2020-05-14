@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 3084426267125501121}
   - component: {fileID: 4735916015228069873}
   - component: {fileID: 3758624705531195412}
+  - component: {fileID: 8725819076187516188}
   - component: {fileID: 8681557406865299449}
   m_Layer: 0
   m_Name: R22 Helicopter
@@ -206,6 +207,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d947ed206ade4ef4c8f7741a21de3820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  throttleInput: 0
+  stickyThrottle: 0
+  collectiveInput: 0
+  clampCollective: 1
+  stickyCollectiveInput: 0
+  cyclicInput: {x: 0, y: 0}
+  clampCyclic: 1
+  pedalInput: 0
+  clampPedal: 1
+  hoverInput: 0
 --- !u!114 &4735916015228069873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +229,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f9bd339d54a3f49b5e7edb4b4613c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  throttleInput: 0
+  stickyThrottle: 0
+  collectiveInput: 0
+  clampCollective: 1
+  stickyCollectiveInput: 0
+  cyclicInput: {x: 0, y: 0}
+  clampCyclic: 1
+  pedalInput: 0
+  clampPedal: 1
+  hoverInput: 0
 --- !u!114 &3758624705531195412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,12 +252,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOfGravity: {fileID: 4549436647236546616}
-  weight_lbs: 10
+  weight_lbs: 1200
   lbs_kg: 0.454
   kg_lbs: 2.205
   engines:
   - {fileID: 4090928960730403274}
   rotorCtrl: {fileID: 5035317435558047697}
+--- !u!114 &8725819076187516188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4728651924404964555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0115352a85dc4ac4a92ec620153bda4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLift: 5
+  mainRotor: {fileID: 453821789}
+  hover: 0
+  tailForce: 2
+  cyclicForce: 2
+  cyclicForceMultiplier: 1000
+  autoLevelForce: 4
 --- !u!54 &8681557406865299449
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -246,8 +286,8 @@ Rigidbody:
   m_GameObject: {fileID: 4728651924404964555}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1587,6 +1627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06281690a25be8d4fbd94a697894d738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxDps: 3000
 --- !u!1 &4851797764129185634
 GameObject:
   m_ObjectHideFlags: 0
@@ -3864,6 +3905,8 @@ MonoBehaviour:
   leftRotor: {fileID: 4853974254349127214}
   rightRotor: {fileID: 4846673031694216430}
   maxPitch: 35
+  radius: 2
+  cyclicVal: {x: 0, y: 0}
 --- !u!114 &2187741272449055419
 MonoBehaviour:
   m_ObjectHideFlags: 0

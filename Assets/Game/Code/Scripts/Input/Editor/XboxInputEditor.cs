@@ -27,7 +27,7 @@ namespace HELI
             EditorGUILayout.Space();
             EditorGUI.indentLevel++;
             EditorGUILayout.LabelField("Throttle: " + targetInput.RawThrottleInput.ToString("0.00"), EditorStyles.boldLabel);
-            EditorGUILayout.LabelField("Collective: " + targetInput.CollectiveInput.ToString("0.00"), EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Collective: " + targetInput.RawCollectiveInput.ToString("0.00"), EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Cyclic: " + targetInput.CyclicInput.ToString("0.00"), EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Pedal: " + targetInput.PedalInput.ToString("0.00"), EditorStyles.boldLabel);
             EditorGUI.indentLevel--;

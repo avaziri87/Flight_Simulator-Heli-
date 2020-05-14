@@ -7,6 +7,7 @@ namespace HELI
 {
     public class HeliRotorcontroller : MonoBehaviour
     {
+        [SerializeField] float maxDps = 3000f;
         [SerializeField] List<IHeliRotor> rotors;
 
         private void Start()
@@ -17,6 +18,7 @@ namespace HELI
         {
             //calculate degres per second (dps)
             float dps = (currentRPM * 360f) / 60f;
+            dps = Mathf.Clamp(dps, 0, maxDps);
             if(rotors.Count>0)
             {
                 foreach(var rotor in rotors)

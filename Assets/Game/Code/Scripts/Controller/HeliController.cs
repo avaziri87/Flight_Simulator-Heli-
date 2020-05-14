@@ -14,7 +14,13 @@ namespace HELI
         [Header("Helicopter Properties")]
         public HeliRotorcontroller rotorCtrl;
 
-        private InputController inputController;
+        InputController inputController;
+        HeliCharacteristic characteristic;
+        public override void Start()
+        {
+            base.Start();
+            characteristic = GetComponent<HeliCharacteristic>();
+        }
         protected override void HandlePhysics()
         {
             inputController = GetComponent<InputController>();
@@ -44,7 +50,10 @@ namespace HELI
         }
         protected virtual void HandleCharacteristics()
         {
-            
+            if(characteristic)
+            {
+                characteristic.UpdateCharacteristic(rb, inputController);
+            }
         }
     }
 }

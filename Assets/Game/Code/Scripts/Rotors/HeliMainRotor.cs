@@ -10,20 +10,29 @@ namespace HELI
         [SerializeField] Transform leftRotor;
         [SerializeField] Transform rightRotor;
         [SerializeField] float maxPitch = 35f;
-        void Start()
-        {
 
+        [SerializeField] float radius = 2f;
+
+        [HideInInspector]
+        public Vector2 cyclicVal;
+
+        private float currentRPM;
+        public float CurrentRPM
+        {
+            get { return currentRPM; }
         }
+
         public void UpdateRotor(float dps, InputController input)
         {
-            //rotate blades
-            transform.Rotate(Vector3.up, dps);
-
+            transform.Rotate(Vector3.up, dps * Time.deltaTime * 0.5f);
+            currentRPM = (dps / 360) * 60;
+            Vector3 discNormal = Vector3.Normalize(transform.up + new Vector3(-cyclicVal.x, 0f, cyclicVal.y));
             //pitch blades up and down
             if(rightRotor && leftRotor)
             {
-                rightRotor.localRotation = Quaternion.Euler(-input.CollectiveInput * maxPitch, 0, 0);
-                leftRotor.localRotation = Quaternion.Euler(input.CollectiveInput * maxPitch, 0, 0);
+                cyclicVal = input.CyclicInput;
+                rightRotor.localRotation = Quaternion.Euler(input.StickyCollectiveInput * maxPitch, 0, 0);
+                leftRotor.localRotation = Quaternion.Euler(-input.StickyCollectiveInput * maxPitch, 0, 0);
             }
         }
     }

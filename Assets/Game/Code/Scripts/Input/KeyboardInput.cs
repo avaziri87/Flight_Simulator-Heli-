@@ -86,13 +86,13 @@ namespace HELI
         {
             hoverInput = Input.GetButtonDown("Hover");
         }
-        protected void ClampInput()
-        {
-            throttleInput = Mathf.Clamp(throttleInput, -1, 1);
-            collectiveInput = Mathf.Clamp(collectiveInput, -clampCollective, clampCollective);
-            cyclicInput = Vector2.ClampMagnitude(cyclicInput, clampCyclic);
-            pedalInput = Mathf.Clamp(pedalInput, -clampPedal, clampPedal);
-        }
+            protected void ClampInput()
+            {
+                throttleInput = Mathf.Clamp(throttleInput, -1, 1);
+                collectiveInput = Mathf.Clamp(collectiveInput, -clampCollective, clampCollective);
+                cyclicInput = Vector2.ClampMagnitude(cyclicInput, clampCyclic);
+                pedalInput = Mathf.Clamp(pedalInput, -clampPedal, clampPedal);
+            }
 
         protected void HandleStickyThrottle()
         {
